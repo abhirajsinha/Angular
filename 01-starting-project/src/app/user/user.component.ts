@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 import { DUMMY_USERS } from './dummy-users';
 
 @Component({
@@ -9,9 +9,15 @@ import { DUMMY_USERS } from './dummy-users';
   styleUrl: './user.component.css',
 })
 export class UserComponent {
-  selectedUser = DUMMY_USERS[0];
+  selectedUser = signal(DUMMY_USERS[0]);
 
-  get imagePath() {
+  // when usign signal using computed property: because it will only be called when the selected user is changed not every time so thats very efficient.
+  imagePath = computed(() => `assets/users/${this.selectedUser().avatar}`);
+
+  // compute image path when not using signal
+  /* get imagePath() {
     return `assets/users/${this.selectedUser.avatar}`;
-  }
+  } */
+
+  onSelectUser() {}
 }
