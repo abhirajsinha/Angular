@@ -1,6 +1,4 @@
-import { Component, computed, signal } from '@angular/core';
-import { DUMMY_USERS } from './dummy-users';
-
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 @Component({
   selector: 'app-user',
   standalone: true,
@@ -9,15 +7,27 @@ import { DUMMY_USERS } from './dummy-users';
   styleUrl: './user.component.css',
 })
 export class UserComponent {
-  selectedUser = signal(DUMMY_USERS[0]);
+  @Input({ required: true }) avatar!: string;
+  @Input({ required: true }) name!: string;
+  @Input() id!: string;
+  @Output() selectedId = new EventEmitter();
+  // take inputs as signals
+  /*
+  avatar = input<string>('avatar');
+  name = input<string>('name');
+  id = input<string>('id');
 
-  // when usign signal using computed property: because it will only be called when the selected user is changed not every time so thats very efficient.
-  imagePath = computed(() => `assets/users/${this.selectedUser().avatar}`);
+  //required inputs
+  avatar = input.required<string>()
+  name = input.required<string>()
+  id = input.required<string>()
+  */
 
-  // compute image path when not using signal
-  /* get imagePath() {
-    return `assets/users/${this.selectedUser.avatar}`;
-  } */
+  get imagePath() {
+    return `assets/users/${this.avatar}`;
+  }
 
-  onSelectUser() {}
+  onSelectUser() {
+    this.selectedId.emit(this.id);
+  }
 }
