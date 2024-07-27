@@ -1,10 +1,12 @@
-import { Component, EventEmitter, Input, input, Output } from '@angular/core'
+import { Component, EventEmitter, Input, input, Output } from '@angular/core';
+import { DatePipe } from '@angular/common';
 import { Task } from './task-model';
+import { CardComponent } from '../../card/card.component';
 
 @Component({
   selector: 'app-task',
   standalone: true,
-  imports: [],
+  imports: [CardComponent, DatePipe],
   templateUrl: './task.component.html',
   styleUrl: './task.component.css',
 })
@@ -13,7 +15,7 @@ export class TaskComponent {
   @Input() task!: Task;
   @Output() complete = new EventEmitter<string>();
 
-  completeTask(){
+  completeTask() {
     this.complete.emit(this.task.id);
   }
 }
