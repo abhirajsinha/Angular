@@ -1,8 +1,8 @@
-import { Component, EventEmitter, Input, input, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { Task } from './task-model';
 import { CardComponent } from '../../card/card.component';
-
+import { TasksService } from '../../../services/task/tasks.service';
 @Component({
   selector: 'app-task',
   standalone: true,
@@ -13,9 +13,10 @@ import { CardComponent } from '../../card/card.component';
 export class TaskComponent {
   // task = input<Task>;
   @Input() task!: Task;
-  @Output() complete = new EventEmitter<string>();
+
+  constructor(private taskService: TasksService) {}
 
   completeTask() {
-    this.complete.emit(this.task.id);
+    this.taskService.removeTask(this.task.id);
   }
 }
