@@ -1,12 +1,12 @@
 @if (isAddingTask) {
-<app-add-task (cancel)="onStartAddTask()" />
+<app-add-task (cancel)="closeDialog()" (add)="onAddTask($event)" />
 }
 
 <section id="tasks">
   <header>
     <h3>{{ name }}'s Tasks</h3>
     <menu>
-      <button (click)="onStartAddTask()">Add Task</button>
+      <button (click)="closeDialog()">Add Task</button>
     </menu>
   </header>
 

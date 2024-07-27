@@ -1,7 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { TaskComponent } from './task/task.component';
 import { dummyTasks } from '../user/user-tasks';
-import { AddTaskComponent } from './add-task/add-task.component';
+import { AddTaskComponent } from './new-task/new-task.component';
+import { type NewTaskModel } from './new-task/new-task.model';
 @Component({
   selector: 'app-tasks',
   standalone: true,
@@ -23,7 +24,19 @@ export class TasksComponent {
     this.tasks = this.tasks.filter((task) => task.id !== id);
   }
 
-  onStartAddTask() {
+  closeDialog() {
     this.isAddingTask = !this.isAddingTask;
+  }
+
+  onAddTask(taskData: NewTaskModel) {
+    this.tasks.push({
+      id: Math.random().toString(36).substr(2, 9),
+      userId: this.selectedUsedId!,
+      dueDate: taskData.date,
+      title: taskData.title,
+      summary: taskData.summary,
+    });
+
+    this.closeDialog();
   }
 }
